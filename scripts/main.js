@@ -1,39 +1,69 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Left box (trigger at 1/4 of the page)
     gsap.to(".left", {
-        rotation: 360,
+        opacity: 1,
+        scale: 1.5, 
+        rotation: 720, 
+        backgroundColor: "hsl(" + Math.random() * 360 + ", 100%, 50%)", 
         scrollTrigger: {
             trigger: '.left',
-            start: "top 75%",   // Trigger when the top of .left reaches 75% of the viewport height (1/4 of the page)
-            end: "top 25%",     // End when the top of .left reaches 25% of the viewport height
-            scrub: true,        // Syncs with scroll
-            markers: true       // For debugging (remove in production)
+            start: "top 75%",   
+            end: "top 25%",     
+            scrub: true,        
+            markers: false,       
+            onUpdate: (self) => {
+                let progress = self.progress; 
+                gsap.to(".left", {
+                    rotation: 720 * progress,  
+                    scale: 1 + progress * 2,   
+                    backgroundColor: "hsl(" + (progress * 360) + ", 100%, 50%)", 
+                });
+            }
         }
     });
 
-    // Right box (trigger at 1/2 of the page)
-    gsap.to(".right", {
-        rotation: 360,
-        scrollTrigger: {
-            trigger: '.right',
-            start: "top 50%",   // Trigger when the top of .right reaches 50% of the viewport height (1/2 of the page)
-            end: "top 0%",      // End when the top of .right reaches the top of the viewport
-            scrub: true,        // Syncs with scroll
-            markers: true       // For debugging (remove in production)
-        }
-    });
-
-    // Center box (trigger at 3/4 of the page)
     gsap.to(".center", {
-        rotation: 360,
+        opacity: 1,
+        rotation: 1080, 
+        scale: 1.2,
+        backgroundColor: "hsl(" + Math.random() * 360 + ", 100%, 50%)",
         scrollTrigger: {
             trigger: '.center',
-            start: "top 25%",   // Trigger when the top of .center reaches 25% of the viewport height (3/4 of the page)
-            end: "top 0%",      // End when the top of .center reaches the top of the viewport
-            scrub: true,        // Syncs with scroll
-            markers: true       // For debugging (remove in production)
+            start: "top 50%",   
+            end: "top 0%",      
+            scrub: true,        
+            markers: false,
+            onUpdate: (self) => {
+                let progress = self.progress;
+                gsap.to(".center", {
+                    rotation: 1080 * progress,
+                    scale: 1 + progress * 2,
+                    backgroundColor: "hsl(" + (progress * 360) + ", 100%, 50%)",
+                });
+            }
+        }
+    });
+
+    gsap.to(".right", {
+        opacity: 1,
+        scale: 1.2,
+        rotation: -360,
+        backgroundColor: "hsl(" + Math.random() * 360 + ", 100%, 50%)",
+        scrollTrigger: {
+            trigger: '.right',
+            start: "top 25%",   
+            end: "top 0%",      
+            scrub: true,        
+            markers: false,
+            onUpdate: (self) => {
+                let progress = self.progress;
+                gsap.to(".right", {
+                    rotation: -360 * progress,
+                    scale: 1 + progress * 3, 
+                    backgroundColor: "hsl(" + (progress * 360) + ", 100%, 50%)", 
+                });
+            }
         }
     });
 });
